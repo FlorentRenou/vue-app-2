@@ -3,7 +3,17 @@ import App from './App.vue'
 import './registerServiceWorker'
 import router from './router'
 
+import 'leaflet/dist/leaflet.css';
+import { Icon } from 'leaflet';
 
+delete Icon.Default.prototype._getIconUrl;
+Icon.Default.mergeOptions({
+  iconRetinaUrl: require('leaflet/dist/images/marker-icon-2x.png'),
+  iconUrl: require('leaflet/dist/images/marker-icon.png'),
+  shadowUrl: require('leaflet/dist/images/marker-shadow.png'),
+});
+
+// Ajout de Axios
 import axios from 'axios'
 import VueAxios from 'vue-axios'
 
@@ -20,7 +30,7 @@ import 'bootstrap-vue/dist/bootstrap-vue.css'
 Vue.use(BootstrapVue)
 // Optionally install the BootstrapVue icon components plugin
 Vue.use(IconsPlugin)
-// Fin ajout de Bootstrap
+
 
 Vue.config.productionTip = false
 
