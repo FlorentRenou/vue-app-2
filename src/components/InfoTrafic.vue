@@ -42,15 +42,13 @@
 
 <script>
     const apiURL_1 = 'https://data.nantesmetropole.fr/api/records/1.0/search/?dataset=244400404_info-trafic-tan-temps-reel&q=&sort=date_debut'
-    const apiURL_2 = 'https://data.nantesmetropole.fr/api/records/1.0/search/?dataset=244400404_tan-arrets&q=&rows=10&refine.stop_id='
 
     export default {
         name: 'InfoTrafic',
         data() {
             return {
             infos: [],
-            arrets_1: [],
-            arrets_2: [],
+            arrets: new Set(),
             searchString: ""
             }
         },
@@ -63,14 +61,23 @@
 
                     const response = await this.axios.get(apiURL_1);
                     this.infos = response.data;
-                    infos.forEach(data => arrets_1 = data.fields.listes_arrets);
-                    console.log(arrets_1);
-
-                    //arrets_1.forEach(data => {
-                    //    const reponse2 = await this.axios.get(apiURL_2 + data);
-                    //    arrets_2 = arrets_2 + reponse2.data;
-                    //}
-
+                    //console.log(this.infos.records[0].fields.listes_arrets)
+                    await this.infos.records.forEach((r) => {
+                        //console.log(r.fields.listes_arrets);
+                        const listes_arrets = JSON.parse(r.fields.listes_arrets);
+                        if (listes_arrets && listes_arrets.LISTE_ARRETS.length > 0){
+                            listes_arrets.LISTE_ARRETS.forEach( (a) => {
+                                console.log(a.CODES);
+                                const codes = a.CODES.split(",");
+                                console.log(codes);
+                                codes.forEach((c) => {
+                                    const code = c.slice(0,-1);
+                                    this.arrets.add(code);
+                                })
+                            })
+                        }
+                    })
+                    localStorage.setItem('listes_arrets', JSON.stringify([arrets]));
                 } catch (error) {
                     console.log(error);
                 }
