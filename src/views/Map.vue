@@ -73,13 +73,17 @@ export default {
     },
     fetchData: async function () {
         try {
+
+            const response = await this.axios.get(apiURL_1);
+            this.infos = response.data;
+
             //console.log(this.arrets);
-            this.arrets.forEach( (a) => {
-                const response = this.axios.get(apiURL_2 + a);
-                console.log(response);
-                this.infos.push(response);
-            })
-            console.log(this.infos)
+            //this.arrets.forEach( (a) => {
+            //    const response = await this.axios.get(apiURL_2 + a);
+            //    this.infos = response.data;
+            //    console.log(this.infos);
+            //})
+            //console.log(this.infos)
           } catch (error) {
             console.log(error);
         }
