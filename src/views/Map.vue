@@ -51,11 +51,13 @@ export default {
       },
       showMap: true,
       infos: [],
+      arrets: [],
     };
   },
   created: function () {
-    this.fetchData()
-    
+    this.fetchData();
+    this.arrets = localStorage.getItem('listes_arrets');
+    //console.log(this.arrets);
   },
   methods: {
     zoomUpdate(zoom) {

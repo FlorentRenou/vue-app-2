@@ -67,9 +67,9 @@
                         const listes_arrets = JSON.parse(r.fields.listes_arrets);
                         if (listes_arrets && listes_arrets.LISTE_ARRETS.length > 0){
                             listes_arrets.LISTE_ARRETS.forEach( (a) => {
-                                console.log(a.CODES);
+                                //console.log(a.CODES);
                                 const codes = a.CODES.split(",");
-                                console.log(codes);
+                                //console.log(codes);
                                 codes.forEach((c) => {
                                     const code = c.slice(0,-1);
                                     this.arrets.add(code);
@@ -77,7 +77,8 @@
                             })
                         }
                     })
-                    localStorage.setItem('listes_arrets', JSON.stringify([arrets]));
+                    //console.log(JSON.stringify(Array.from(this.arrets)));
+                    localStorage.setItem('listes_arrets', JSON.stringify(Array.from(this.arrets)));
                 } catch (error) {
                     console.log(error);
                 }
