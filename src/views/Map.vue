@@ -26,7 +26,8 @@
 <script>
 import { latLng } from "leaflet";
 import { LMap, LTileLayer, LMarker, LPopup, LTooltip } from "vue2-leaflet";
-const apiURL_2 = 'https://data.nantesmetropole.fr/api/records/1.0/search/?dataset=244400404_tan-arrets&q=&rows=20'
+const apiURL_1 = 'https://data.nantesmetropole.fr/api/records/1.0/search/?dataset=244400404_tan-arrets&q=&rows=20'
+const apiURL_2 = 'https://data.nantesmetropole.fr/api/records/1.0/search/?dataset=244400404_tan-arrets&q=&rows=20&refine.stop_id='
 
 export default {
   name: "App",
@@ -55,9 +56,9 @@ export default {
     };
   },
   created: function () {
-    this.fetchData();
-    this.arrets = localStorage.getItem('listes_arrets');
+    this.arrets = JSON.parse(localStorage.getItem('listes_arrets'));
     //console.log(this.arrets);
+    this.fetchData();
   },
   methods: {
     zoomUpdate(zoom) {
@@ -72,8 +73,13 @@ export default {
     },
     fetchData: async function () {
         try {
-            const response = await this.axios.get(apiURL_2);
-            this.infos = response.data;
+            //console.log(this.arrets);
+            this.arrets.forEach( (a) => {
+                const response = this.axios.get(apiURL_2 + a);
+                console.log(response);
+                this.infos.push(response);
+            })
+            console.log(this.infos)
           } catch (error) {
             console.log(error);
         }
