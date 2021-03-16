@@ -78,7 +78,7 @@ export default {
             this.infos = response.data;
 
             //console.log(this.arrets);
-            //this.arrets.forEach( (a) => {
+            //this.arrets.forEach(async (a) => {
             //    const response = await this.axios.get(apiURL_2 + a);
             //    this.infos = response.data;
             //    console.log(this.infos);
